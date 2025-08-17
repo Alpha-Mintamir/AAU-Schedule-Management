@@ -136,12 +136,15 @@ def main() -> None:
 
     # Jobs: only schedule when Supabase is configured
     if supabase:
+        async def _send_outbox_job(_ctx: ContextTypes.DEFAULT_TYPE) -> None:
+            await claim_outbox_and_send(application, supabase)
+
         application.job_queue.run_repeating(
-            lambda ctx: claim_outbox_and_send(application, supabase), interval=15, first=5
+            _send_outbox_job, interval=15, first=5
         )
         # Keep a daily run that will pick up reminders via outbox
         application.job_queue.run_daily(
-            lambda ctx: claim_outbox_and_send(application, supabase),
+            _send_outbox_job,
             time=datetime.strptime("06:30", "%H:%M").time(),
             days=(0, 1, 2, 3, 4, 5, 6),
             name="daily_reminders",

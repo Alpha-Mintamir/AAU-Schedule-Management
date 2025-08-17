@@ -16,7 +16,14 @@ export async function GET(req: NextRequest) {
       .eq('batch_id', batchId)
       .order('course(code)');
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    const items = (data ?? []).map((row: any) => ({
+    type CourseAssignmentJoinRow = {
+      id: string;
+      batch_id: string;
+      course_id: string;
+      instructor_id: string;
+      course?: { code?: string | null; title?: string | null } | null;
+    };
+    const items = ((data ?? []) as CourseAssignmentJoinRow[]).map((row) => ({
       id: row.id,
       batch_id: row.batch_id,
       course_id: row.course_id,

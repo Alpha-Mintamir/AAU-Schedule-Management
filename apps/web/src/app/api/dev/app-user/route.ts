@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   const { id, email, fullName } = parsed.data;
 
-  const payload: any = { email, full_name: fullName };
+  const payload: { id?: string; email: string; full_name: string } = { email, full_name: fullName };
   if (id) payload.id = id;
 
   const { data, error } = await supabaseAdmin.from('app_user').insert(payload).select('id').single();
