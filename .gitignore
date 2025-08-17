@@ -1,0 +1,25 @@
+# Node
+node_modules/
+*.log
+
+# Next.js
+.apps/
+.next/
+out/
+
+# Envs
+.env*
+apps/web/.env.local
+apps/bot/.env
+
+# Python venv
+apps/bot/.venv/
+__pycache__/
+
+# Drizzle build output
+apps/web/drizzle/*.sqlite
+
+# Misc
+.DS_Store
+.idea/
+.vscode/
