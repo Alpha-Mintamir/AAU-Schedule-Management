@@ -7,7 +7,8 @@ type Department = { id: string; college_id: string; name: string };
 type Batch = { id: string; department_id: string; entry_year: number; name: string };
 type Section = { id: string; batch_id: string; name: string };
 
-async function json<T>(res: Response): Promise<T> {
+async function json<T>(resPromise: Promise<Response>): Promise<T> {
+  const res = await resPromise;
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }

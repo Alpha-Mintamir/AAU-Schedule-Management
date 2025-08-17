@@ -8,7 +8,8 @@ type Batch = { id: string; department_id: string; entry_year: number; name: stri
 type Assignment = { id: string; course_id: string; instructor_id: string; code?: string; title?: string };
 type Meeting = { id: string; weekday: number; starts_at: string; ends_at: string; room?: string; course_assignment_id: string; course_code?: string; course_title?: string; instructor_name?: string };
 
-async function toJson<T>(res: Response): Promise<T> {
+async function toJson<T>(resPromise: Promise<Response>): Promise<T> {
+  const res = await resPromise;
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }

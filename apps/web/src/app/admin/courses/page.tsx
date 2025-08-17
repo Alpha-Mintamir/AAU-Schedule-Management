@@ -6,7 +6,8 @@ type College = { id: string; name: string };
 type Department = { id: string; college_id: string; name: string };
 type Course = { id: string; department_id: string; code: string; title: string; credit_hours: number };
 
-async function toJson<T>(res: Response): Promise<T> {
+async function toJson<T>(resPromise: Promise<Response>): Promise<T> {
+  const res = await resPromise;
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }

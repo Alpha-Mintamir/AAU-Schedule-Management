@@ -9,7 +9,8 @@ type Course = { id: string; code: string; title: string };
 type Instructor = { id: string; user_id: string; full_name?: string; email?: string };
 type Assignment = { id: string; batch_id: string; course_id: string; instructor_id: string; code?: string; title?: string };
 
-async function toJson<T>(res: Response): Promise<T> {
+async function toJson<T>(resPromise: Promise<Response>): Promise<T> {
+  const res = await resPromise;
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
