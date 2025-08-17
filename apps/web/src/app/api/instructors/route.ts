@@ -23,4 +23,21 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true, id: rows[0].id });
 }
 
+export async function GET() {
+  if (supabaseAdmin) {
+    const { data, error } = await supabaseAdmin
+      .from('instructor')
+      .select('id, user_id, user: user_id (full_name, email)')
+      .order('id');
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    const items = (data ?? []).map((r: any) => ({ id: r.id, user_id: r.user_id, full_name: r.user?.full_name, email: r.user?.email }));
+    return NextResponse.json({ items });
+  }
+  const pool = getPool();
+  const { rows } = await pool.query(
+    'select i.id, i.user_id, u.full_name, u.email from instructor i join app_user u on u.id = i.user_id order by i.id'
+  );
+  return NextResponse.json({ items: rows });
+}
+
 

@@ -60,4 +60,52 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true, id: rows[0].id });
 }
 
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const batchId = searchParams.get('batchId');
+  if (!batchId) {
+    return NextResponse.json({ error: 'batchId required' }, { status: 400 });
+  }
+  if (supabaseAdmin) {
+    const { data, error } = await supabaseAdmin
+      .from('class_meeting')
+      .select(
+        'id, weekday, starts_at, ends_at, room, course_assignment:course_assignment_id(id, batch_id, course:course_id(code,title), instructor:instructor_id(user:user_id(full_name,email)))'
+      )
+      .in(
+        'course_assignment_id',
+        (await supabaseAdmin.from('course_assignment').select('id').eq('batch_id', batchId)).data?.map((r: any) => r.id) || []
+      )
+      .order('weekday')
+      .order('starts_at');
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    const items = (data ?? []).map((r: any) => ({
+      id: r.id,
+      weekday: r.weekday,
+      starts_at: r.starts_at,
+      ends_at: r.ends_at,
+      room: r.room,
+      course_code: r.course_assignment?.course?.code,
+      course_title: r.course_assignment?.course?.title,
+      instructor_name: r.course_assignment?.instructor?.user?.full_name || r.course_assignment?.instructor?.user?.email,
+      course_assignment_id: r.course_assignment?.id,
+    }));
+    return NextResponse.json({ items });
+  }
+  const pool = getPool();
+  const { rows } = await pool.query(
+    `select cm.id, cm.weekday, cm.starts_at, cm.ends_at, cm.room, c.code as course_code, c.title as course_title,
+            u.full_name as instructor_name, cm.course_assignment_id
+     from class_meeting cm
+     join course_assignment ca on ca.id = cm.course_assignment_id
+     join course c on c.id = ca.course_id
+     join instructor i on i.id = ca.instructor_id
+     join app_user u on u.id = i.user_id
+     where ca.batch_id = $1
+     order by cm.weekday asc, cm.starts_at asc`,
+    [batchId]
+  );
+  return NextResponse.json({ items: rows });
+}
+
 
