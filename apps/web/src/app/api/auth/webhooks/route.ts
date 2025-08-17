@@ -7,6 +7,19 @@ export async function POST(req: NextRequest) {
   const event = await req.json();
   if (event?.type === 'user.created') {
     const { id, email, name } = event.data ?? {};
+    // Enforce AAU email domain on server side
+    const allowedDomain = 'aau.edu.et';
+    const isAllowed = typeof email === 'string' && email.toLowerCase().endsWith(`@${allowedDomain}`);
+    if (!isAllowed) {
+      // Delete the just-created auth user to prevent non-AAU accounts
+      const client = await pool.connect();
+      try {
+        await client.query('delete from "user" where id = $1', [id]);
+      } finally {
+        client.release();
+      }
+      return NextResponse.json({ error: 'Email domain not allowed' }, { status: 403 });
+    }
     const client = await pool.connect();
     try {
       await client.query(

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getPool } from '@/lib/pg';
 import { supabaseAdmin } from '@/lib/supabase';
+import { getActorId } from '@/lib/authn';
+import { requireDepartmentAdmin } from '@/lib/rbac';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -40,6 +42,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
   const { departmentId, entryYear, name } = parsed.data;
+  const actorId = getActorId(req);
+  if (!actorId) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  try { await requireDepartmentAdmin(actorId, departmentId); } catch { return NextResponse.json({ error: 'forbidden' }, { status: 403 }); }
   if (supabaseAdmin) {
     const { data, error } = await supabaseAdmin
       .from('batch')
