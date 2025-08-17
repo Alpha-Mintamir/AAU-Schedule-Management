@@ -17,7 +17,17 @@ export async function GET(req: NextRequest) {
       .order('exam_date')
       .order('starts_at');
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    const items = (data ?? []).map((row: any) => ({
+    type ExamJoinRow = {
+      id: string;
+      batch_id: string;
+      course_id: string;
+      exam_date: string;
+      starts_at: string;
+      ends_at: string;
+      room: string | null;
+      course?: { code?: string | null; title?: string | null } | null;
+    };
+    const items = ((data ?? []) as ExamJoinRow[]).map((row) => ({
       id: row.id,
       batch_id: row.batch_id,
       course_id: row.course_id,
