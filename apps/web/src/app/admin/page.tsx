@@ -126,6 +126,14 @@ export default function AdminPage() {
     <main style={{ padding: 24, display: "grid", gap: 24 }}>
       <h1>Admin: Structure</h1>
 
+      <nav style={{ display: "flex", gap: 12 }}>
+        <a href="/admin/courses">Courses</a>
+        <a href="/admin/assignments">Assignments</a>
+        <a href="/admin/schedule">Schedule</a>
+        <a href="/admin/overrides">Overrides</a>
+        <a href="/admin/exams">Exams</a>
+      </nav>
+
       <section style={{ border: "1px solid #ddd", padding: 16, borderRadius: 8 }}>
         <h2>Colleges</h2>
         <div style={{ display: "flex", gap: 8 }}>
