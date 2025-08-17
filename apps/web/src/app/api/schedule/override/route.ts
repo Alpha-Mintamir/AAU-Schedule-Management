@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { Pool } from 'pg';
 import { supabaseAdmin } from '@/lib/supabase';
+import { getActorId } from '@/lib/authn';
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -29,8 +30,7 @@ export async function POST(req: NextRequest) {
   }
   const body = parsed.data;
 
-  // TODO: derive actor_id from session
-  const actorId = req.headers.get('x-actor-id');
+  const actorId = getActorId(req);
   if (!actorId) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }

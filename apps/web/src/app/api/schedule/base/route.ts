@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getPool } from '@/lib/pg';
 import { supabaseAdmin } from '@/lib/supabase';
+import { getActorId } from '@/lib/authn';
 
 const bodySchema = z.object({
   courseAssignmentId: z.string().uuid(),
@@ -19,8 +20,7 @@ export async function POST(req: NextRequest) {
   }
   const body = parsed.data;
 
-  // TODO: derive actor_id from session
-  const actorId = req.headers.get('x-actor-id');
+  const actorId = getActorId(req);
   if (!actorId) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
