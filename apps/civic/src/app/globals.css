@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
+@theme {
+  /* Civic palette: deep Ethiopian green as primary, warm neutrals,
+     restrained amber for community accents. */
+  --color-primary-50: #f0f9f2;
+  --color-primary-100: #dbf0e0;
+  --color-primary-200: #b9e1c6;
+  --color-primary-300: #8bcaa3;
+  --color-primary-400: #58ac7b;
+  --color-primary-500: #37905e;
+  --color-primary-600: #26734a;
+  --color-primary-700: #1f5c3d;
+  --color-primary-800: #1b4a33;
+  --color-primary-900: #173d2b;
+  --color-primary-950: #0b2218;
+
+  --color-accent-50: #fefaec;
+  --color-accent-100: #fbf0ca;
+  --color-accent-200: #f7e090;
+  --color-accent-300: #f3ca56;
+  --color-accent-400: #efb42f;
+  --color-accent-500: #e89417;
+  --color-accent-600: #cd7011;
+  --color-accent-700: #aa4f12;
+  --color-accent-800: #8a3e15;
+  --color-accent-900: #723314;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Noto Sans Ethiopic", "Nyala", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-stone-50 text-stone-900 antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Visible focus states everywhere for keyboard navigation. */
+:focus-visible {
+  outline: 2px solid var(--color-primary-600);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background-color: var(--color-primary-100);
 }
