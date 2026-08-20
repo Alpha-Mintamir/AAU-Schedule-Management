@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
        where cm.id = $3`,
       [
         body.sectionId,
-        JSON.stringify({ text: `Schedule updated: ${body.action} — ${body.reason}` }),
+        JSON.stringify({ text: `Schedule updated: ${body.action}: ${body.reason}` }),
         body.classMeetingId,
       ]
     );

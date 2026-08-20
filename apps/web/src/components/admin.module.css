@@ -1,0 +1,375 @@
+.shell {
+  --admin-sidebar: 240px;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: var(--admin-sidebar) 1fr;
+  background: var(--bg);
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 16px;
+  border-right: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.mark {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  background: var(--accent);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--fg-muted);
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.navLink:hover {
+  background: var(--bg-muted);
+  color: var(--fg);
+}
+
+.navLinkActive {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.navIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.85;
+}
+
+.sidebarFoot {
+  margin-top: auto;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+}
+
+.sidebarFoot p {
+  color: var(--fg-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.sidebarFoot a {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.main {
+  min-width: 0;
+  padding: 28px 32px 48px;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.topbar h1 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.85rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  font-weight: 550;
+}
+
+.topbar p {
+  margin-top: 6px;
+  color: var(--fg-muted);
+  font-size: 14px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--bg-elevated);
+  color: var(--fg-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cardHeader h2 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.05rem;
+  letter-spacing: -0.015em;
+  font-weight: 550;
+}
+
+.cardHeader span {
+  color: var(--fg-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cardBody {
+  padding: 16px 18px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field label {
+  color: var(--fg-muted);
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.input,
+.select {
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.input:disabled,
+.select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.button {
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    background 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.button:hover {
+  background: var(--accent-hover);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.buttonGhost {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--fg);
+}
+
+.buttonGhost:hover {
+  background: var(--bg-muted);
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.listButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.listButton:hover {
+  background: var(--bg-muted);
+}
+
+.listButtonActive {
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.meta {
+  color: var(--fg-subtle);
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+.empty {
+  margin-top: 14px;
+  padding: 28px 18px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--fg-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  font-size: 14px;
+}
+
+.table th {
+  color: var(--fg-subtle);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .sidebarFoot {
+    display: none;
+  }
+
+  .main {
+    padding: 20px 16px 40px;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+}
